@@ -1,6 +1,10 @@
 package com.jabberpoint.controller;
 import java.awt.event.KeyEvent;
 
+import com.jabberpoint.command.Command;
+import com.jabberpoint.command.ExitCommand;
+import com.jabberpoint.command.NextSlideCommand;
+import com.jabberpoint.command.PreviousSlideCommand;
 import com.jabberpoint.model.Presentation;
 
 import java.awt.event.KeyAdapter;
@@ -23,24 +27,30 @@ public class KeyController extends KeyAdapter {
 	}
 
 	public void keyPressed(KeyEvent keyEvent) {
+		Command command = null;
 		switch(keyEvent.getKeyCode()) {
 			case KeyEvent.VK_PAGE_DOWN:
 			case KeyEvent.VK_DOWN:
 			case KeyEvent.VK_ENTER:
 			case '+':
-				presentation.nextSlide();
+				command = new NextSlideCommand(this.presentation);
 				break;
 			case KeyEvent.VK_PAGE_UP:
 			case KeyEvent.VK_UP:
 			case '-':
-				presentation.prevSlide();
+				command = new PreviousSlideCommand(this.presentation);
 				break;
 			case 'q':
 			case 'Q':
-				System.exit(0);
+				command = new ExitCommand();
 				break; // Probably never reached!!
 			default:
 				break;
+		}
+
+		if (command != null) 
+		{
+			command.execute();
 		}
 	}
 }

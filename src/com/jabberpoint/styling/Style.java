@@ -1,3 +1,4 @@
+package com.jabberpoint.styling;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -18,11 +19,11 @@ public class Style {
 	private static Style[] styles; // de styles
 	
 	private static final String FONTNAME = "Helvetica";
-	int indent;
-	Color color;
-	Font font;
-	int fontSize;
-	int leading;
+	public int indent;
+	public Color color;
+	public Font font;
+	public int fontSize;
+	public int leading;
 
 	public static void createStyles() {
 		styles = new Style[5];    

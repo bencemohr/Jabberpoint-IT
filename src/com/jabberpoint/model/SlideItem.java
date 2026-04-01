@@ -1,6 +1,8 @@
+package com.jabberpoint.model;
 import java.awt.Rectangle;
 import java.awt.Graphics;
 import java.awt.image.ImageObserver;
+import com.jabberpoint.styling.Style;
 
 /** <p>The abstract class for an item on a slide<p>
  * <p>All SlideItems have drawingfunctionality.</p>

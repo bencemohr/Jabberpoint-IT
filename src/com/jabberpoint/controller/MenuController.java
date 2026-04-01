@@ -1,3 +1,4 @@
+package com.jabberpoint.controller;
 import java.awt.MenuBar;
 import java.awt.Frame;
 import java.awt.Menu;
@@ -8,6 +9,11 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
+
+import com.jabberpoint.data.Accessor;
+import com.jabberpoint.data.XMLAccessor;
+import com.jabberpoint.model.Presentation;
+import com.jabberpoint.ui.AboutBox;
 
 /** <p>The controller for the menu</p>
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman

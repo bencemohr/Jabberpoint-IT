@@ -1,3 +1,4 @@
+package com.jabberpoint.model;
 import java.awt.Rectangle;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,6 +13,7 @@ import java.text.AttributedString;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
+import com.jabberpoint.styling.Style;
 
 /** <p>A tekst item.</p>
  * <p>A TextItem has drawingfunctionality.</p>

@@ -1,8 +1,10 @@
+package com.jabberpoint.model;
 import java.awt.Rectangle;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
+import com.jabberpoint.styling.Style;
 
 import javax.imageio.ImageIO;
 

@@ -1,4 +1,7 @@
+package com.jabberpoint.data;
 import java.io.IOException;
+
+import com.jabberpoint.model.Presentation;
 
 /**
  * <p>Een Accessor maakt het mogelijk om gegevens voor een presentatie
@@ -18,7 +21,7 @@ public abstract class Accessor {
 	public static final String DEFAULT_EXTENSION = ".xml";
 
 	public static Accessor getDemoAccessor() {
-		return new DemoPresentation();
+		return new DemoAccessor();
 	}
 
 	public Accessor() {

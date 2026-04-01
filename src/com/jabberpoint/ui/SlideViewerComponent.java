@@ -1,3 +1,4 @@
+package com.jabberpoint.ui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Dimension;
@@ -5,6 +6,9 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+
+import com.jabberpoint.model.Presentation;
+import com.jabberpoint.model.Slide;
 
 
 /** <p>SlideViewerComponent is a graphical component that can show slides.</p>

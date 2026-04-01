@@ -1,3 +1,9 @@
+package com.jabberpoint.data;
+
+import com.jabberpoint.model.BitmapItem;
+import com.jabberpoint.model.Presentation;
+import com.jabberpoint.model.Slide;
+
 /** A built in demo-presentation
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
  * @version 1.1 2002/12/17 Gert Florijn
@@ -8,7 +14,7 @@
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-class DemoPresentation extends Accessor {
+class DemoAccessor extends Accessor {
 
 	public void loadFile(Presentation presentation, String unusedFilename) {
 		presentation.setTitle("Demo Presentation");

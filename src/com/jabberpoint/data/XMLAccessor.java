@@ -1,3 +1,4 @@
+package com.jabberpoint.data;
 import java.util.Vector;
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +10,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
+
+import com.jabberpoint.model.BitmapItem;
+import com.jabberpoint.model.Presentation;
+import com.jabberpoint.model.Slide;
+import com.jabberpoint.model.SlideItem;
+import com.jabberpoint.model.TextItem;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;

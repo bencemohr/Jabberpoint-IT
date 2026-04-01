@@ -1,4 +1,11 @@
+package com.jabberpoint;
 import javax.swing.JOptionPane;
+
+import com.jabberpoint.data.Accessor;
+import com.jabberpoint.data.XMLAccessor;
+import com.jabberpoint.model.Presentation;
+import com.jabberpoint.styling.Style;
+import com.jabberpoint.ui.PresentationWindow;
 
 import java.io.IOException;
 
@@ -26,7 +33,7 @@ public class JabberPoint {
 		
 		Style.createStyles();
 		Presentation presentation = new Presentation();
-		new SlideViewerFrame(JABVERSION, presentation);
+		new PresentationWindow(JABVERSION, presentation);
 		try {
 			if (argv.length == 0) { // een demo presentatie
 				Accessor.getDemoAccessor().loadFile(presentation, "");

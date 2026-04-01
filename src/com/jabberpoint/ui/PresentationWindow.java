@@ -1,7 +1,12 @@
+package com.jabberpoint.ui;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import javax.swing.JFrame;
+import com.jabberpoint.controller.KeyController;
+import com.jabberpoint.controller.MenuController;
+
+import com.jabberpoint.model.Presentation;
 
 /**
  * <p>The application window for a slideviewcomponent</p>
@@ -14,14 +19,14 @@ import javax.swing.JFrame;
  * @version 1.6 2014/05/16 Sylvia Stuurman
 */
 
-public class SlideViewerFrame extends JFrame {
+public class PresentationWindow extends JFrame {
 	private static final long serialVersionUID = 3227L;
 	
 	private static final String JABTITLE = "Jabberpoint 1.6 - OU";
 	public final static int WIDTH = 1200;
 	public final static int HEIGHT = 800;
 	
-	public SlideViewerFrame(String title, Presentation presentation) {
+	public PresentationWindow(String title, Presentation presentation) {
 		super(title);
 		SlideViewerComponent slideViewerComponent = new SlideViewerComponent(presentation, this);
 		presentation.setShowView(slideViewerComponent);

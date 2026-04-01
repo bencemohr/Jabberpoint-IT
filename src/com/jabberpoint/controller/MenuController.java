@@ -6,12 +6,8 @@ import java.awt.MenuItem;
 import java.awt.MenuShortcut;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 
-import javax.swing.JOptionPane;
-
-import com.jabberpoint.data.Accessor;
-import com.jabberpoint.data.XMLAccessor;
+import com.jabberpoint.command.*;
 import com.jabberpoint.model.Presentation;
 import com.jabberpoint.ui.AboutBox;
 
@@ -59,16 +55,7 @@ public class MenuController extends MenuBar {
 		fileMenu.add(menuItem = mkMenuItem(OPEN));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.clear();
-				Accessor xmlAccessor = new XMLAccessor();
-				try {
-					xmlAccessor.loadFile(presentation, TESTFILE);
-					presentation.setSlideNumber(0);
-				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(parent, IOEX + exc, 
-         			LOADERR, JOptionPane.ERROR_MESSAGE);
-				}
-				parent.repaint();
+				new OpenPresentationCommand(presentation, parent).execute();
 			}
 		} );
 		fileMenu.add(menuItem = mkMenuItem(NEW));
@@ -81,20 +68,14 @@ public class MenuController extends MenuBar {
 		fileMenu.add(menuItem = mkMenuItem(SAVE));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Accessor xmlAccessor = new XMLAccessor();
-				try {
-					xmlAccessor.saveFile(presentation, SAVEFILE);
-				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(parent, IOEX + exc, 
-							SAVEERR, JOptionPane.ERROR_MESSAGE);
-				}
+				new SavePresentationCommand(presentation, parent).execute();
 			}
 		});
 		fileMenu.addSeparator();
 		fileMenu.add(menuItem = mkMenuItem(EXIT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.exit(0);
+				new ExitCommand().execute();
 			}
 		});
 		add(fileMenu);
@@ -102,21 +83,19 @@ public class MenuController extends MenuBar {
 		viewMenu.add(menuItem = mkMenuItem(NEXT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.nextSlide();
+				new NextSlideCommand(presentation).execute();
 			}
 		});
 		viewMenu.add(menuItem = mkMenuItem(PREV));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.prevSlide();
+				new PreviousSlideCommand(presentation).execute();
 			}
 		});
 		viewMenu.add(menuItem = mkMenuItem(GOTO));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				String pageNumberStr = JOptionPane.showInputDialog((Object)PAGENR);
-				int pageNumber = Integer.parseInt(pageNumberStr);
-				presentation.setSlideNumber(pageNumber - 1);
+				new GoToSlideCommand(presentation).execute();
 			}
 		});
 		add(viewMenu);

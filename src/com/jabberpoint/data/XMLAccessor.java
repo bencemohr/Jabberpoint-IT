@@ -11,6 +11,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import com.jabberpoint.factory.DefaultSlideItemFactory;
+import com.jabberpoint.factory.SlideItemFactory;
 import com.jabberpoint.model.BitmapItem;
 import com.jabberpoint.model.Presentation;
 import com.jabberpoint.model.Slide;
@@ -52,6 +54,8 @@ public class XMLAccessor extends Accessor {
     protected static final String PCE = "Parser Configuration Exception";
     protected static final String UNKNOWNTYPE = "Unknown Element type";
     protected static final String NFE = "Number Format Exception";
+
+	protected SlideItemFactory factory = new DefaultSlideItemFactory();
     
     
     private String getTitle(Element element, String tagName) {
@@ -108,16 +112,14 @@ public class XMLAccessor extends Accessor {
 			}
 		}
 		String type = attributes.getNamedItem(KIND).getTextContent();
-		if (TEXT.equals(type)) {
-			slide.append(new TextItem(level, item.getTextContent()));
+		SlideItem slideItem = factory.create(level, item.getTextContent(), type);
+		if (slideItem != null) 
+		{
+			slide.append(slideItem);
 		}
-		else {
-			if (IMAGE.equals(type)) {
-				slide.append(new BitmapItem(level, item.getTextContent()));
-			}
-			else {
-				System.err.println(UNKNOWNTYPE);
-			}
+		else 
+		{
+			System.err.println(UNKNOWNTYPE + ": " + type);
 		}
 	}
 

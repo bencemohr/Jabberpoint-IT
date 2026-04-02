@@ -1,0 +1,121 @@
+name: Create (pre)release on push to main
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  build-and-test:
+    name: "Testing on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          
+      - name: Compile source code
+        run: |
+          mkdir -p bin
+          find src -name "*.java" > src_files.txt
+          javac -d bin @src_files.txt
+          
+      - name: Compile test code
+        run: |
+          find test -name "*.java" > test_files.txt
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            SEP=";"
+          else
+            SEP=":"
+          fi
+          javac -cp "bin${SEP}lib/junit-platform-console-standalone-1.10.1.jar" -d bin @test_files.txt
+          
+      - name: Run JUnit Tests
+        run: |
+          java -jar lib/junit-platform-console-standalone-1.10.1.jar --class-path bin --scan-class-path --fail-if-no-tests
+
+  quality-assurance:
+    name: "Code Quality"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          
+      - name: Run PMD Static Code Analysis
+        uses: pmd/pmd-github-action@v2
+        with:
+          rulesets: 'category/java/design.xml,category/java/errorprone.xml'
+          sourcePath: 'src'
+          analyzeModifiedFilesOnly: false
+
+  production-release:
+    name: "Release"
+    needs: [build-and-test, quality-assurance]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          
+      - name: Compile Application
+        run: |
+          mkdir -p bin
+          find src -name "*.java" > src_files.txt
+          javac -d bin @src_files.txt
+          
+      - name: Create Executable JAR
+        run: |
+          jar cfe JabberPoint.jar com.jabberpoint.JabberPoint -C bin com
+          
+      - name: Prepare Release Artifacts
+        run: |
+          mkdir release_package
+          cp JabberPoint.jar release_package/
+          cp COPYRIGHT.txt release_package/ 2>/dev/null || true
+          cp -r *.xml release_package/ 2>/dev/null || true
+          cp -r *.dtd release_package/ 2>/dev/null || true
+          cp -r *.gif release_package/ 2>/dev/null || true
+          cp -r *.jpg release_package/ 2>/dev/null || true
+          cp -r README.md release_package/ 2>/dev/null || true
+          cd release_package
+          zip -r ../JabberPoint-Release.zip *
+          
+      - name: Generate Release Tag
+        id: tag_gen
+        run: echo "tag=auto-release-$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+        
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.tag_gen.outputs.tag }}
+          name: "Production Release ${{ steps.tag_gen.outputs.tag }}"
+          draft: false
+          prerelease: ${{ github.event_name != 'workflow_dispatch' }}
+          files: JabberPoint-Release.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

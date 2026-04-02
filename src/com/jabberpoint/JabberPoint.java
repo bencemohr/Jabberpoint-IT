@@ -31,6 +31,7 @@ public class JabberPoint {
 	/** Het Main Programma */
 	public static void main(String argv[]) {
 		
+		BROKEN_CODE
 		Style.createStyles();
 		Presentation presentation = new Presentation();
 		new PresentationWindow(JABVERSION, presentation);

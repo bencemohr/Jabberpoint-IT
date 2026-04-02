@@ -23,7 +23,7 @@ public class KeyController extends KeyAdapter {
 	private Presentation presentation; // Commands are given to the presentation
 
 	public KeyController(Presentation p) {
-		presentation = p;
+		presentation = p; // CI test trigger
 	}
 
 	public void keyPressed(KeyEvent keyEvent) {

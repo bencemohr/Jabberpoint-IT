@@ -1,7 +1,8 @@
 package com.jabberpoint.model;
 import java.util.ArrayList;
 
-import com.jabberpoint.ui.SlideViewerComponent;
+import com.jabberpoint.observer.Observer;
+import com.jabberpoint.observer.Subject;
 
 
 /**
@@ -16,19 +17,13 @@ import com.jabberpoint.ui.SlideViewerComponent;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-public class Presentation {
+public class Presentation implements Subject {
 	private String showTitle; // title of the presentation
 	private ArrayList<Slide> showList = null; // an ArrayList with Slides
 	private int currentSlideNumber = 0; // the slidenummer of the current Slide
-	private SlideViewerComponent slideViewComponent = null; // the viewcomponent of the Slides
+	private final ArrayList<Observer> observers = new ArrayList<Observer>();
 
 	public Presentation() {
-		slideViewComponent = null;
-		clear();
-	}
-
-	public Presentation(SlideViewerComponent slideViewerComponent) {
-		this.slideViewComponent = slideViewerComponent;
 		clear();
 	}
 
@@ -44,8 +39,17 @@ public class Presentation {
 		showTitle = nt;
 	}
 
-	public void setShowView(SlideViewerComponent slideViewerComponent) {
-		this.slideViewComponent = slideViewerComponent;
+	public void addObserver(Observer observer) {
+		if (observer == null) {
+			return;
+		}
+		if (!observers.contains(observer)) {
+			observers.add(observer);
+		}
+	}
+
+	public void removeObserver(Observer observer) {
+		observers.remove(observer);
 	}
 
 	// give the number of the current slide
@@ -56,8 +60,13 @@ public class Presentation {
 	// change the current slide number and signal it to the window
 	public void setSlideNumber(int number) {
 		currentSlideNumber = number;
-		if (slideViewComponent != null) {
-			slideViewComponent.update(this, getCurrentSlide());
+		notifyObservers();
+	}
+
+	private void notifyObservers() {
+		Slide currentSlide = getCurrentSlide();
+		for (Observer observer : observers) {
+			observer.update(this, currentSlide);
 		}
 	}
 

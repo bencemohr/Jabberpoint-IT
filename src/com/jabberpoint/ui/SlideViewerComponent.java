@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+import com.jabberpoint.observer.Observer;
 import com.jabberpoint.model.Presentation;
 import com.jabberpoint.model.Slide;
 
@@ -21,7 +22,7 @@ import com.jabberpoint.model.Slide;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-public class SlideViewerComponent extends JComponent {
+public class SlideViewerComponent extends JComponent implements Observer {
 		
 	private Slide slide; // current slide
 	private Font labelFont = null; // font for labels
@@ -49,6 +50,7 @@ public class SlideViewerComponent extends JComponent {
 		return new Dimension(Slide.WIDTH, Slide.HEIGHT);
 	}
 
+	@Override
 	public void update(Presentation presentation, Slide data) {
 		if (data == null) {
 			repaint();

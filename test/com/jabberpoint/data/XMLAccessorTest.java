@@ -5,8 +5,6 @@ import com.jabberpoint.model.Slide;
 import com.jabberpoint.model.SlideItem;
 import com.jabberpoint.model.TextItem;
 import com.jabberpoint.model.BitmapItem;
-import com.jabberpoint.factory.SlideItemFactory;
-import com.jabberpoint.factory.DefaultSlideItemFactory;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +17,6 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class XMLAccessorTest {
 

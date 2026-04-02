@@ -28,8 +28,12 @@ class BlockingCommandsTest {
         if (GraphicsEnvironment.isHeadless()) return;
         Presentation presentation = new Presentation();
         JFrame frame = new JFrame();
-        Command open = new OpenPresentationCommand(presentation, frame);
-        assertNotNull(open, "OpenPresentationCommand should instantiate correctly.");
+        try {
+            Command open = new OpenPresentationCommand(presentation, frame);
+            assertNotNull(open, "OpenPresentationCommand should instantiate correctly.");
+        } finally {
+            frame.dispose();
+        }
     }
 
     @Test
@@ -37,7 +41,11 @@ class BlockingCommandsTest {
         if (GraphicsEnvironment.isHeadless()) return;
         Presentation presentation = new Presentation();
         JFrame frame = new JFrame();
-        Command save = new SavePresentationCommand(presentation, frame);
-        assertNotNull(save, "SavePresentationCommand should instantiate correctly.");
+        try {
+            Command save = new SavePresentationCommand(presentation, frame);
+            assertNotNull(save, "SavePresentationCommand should instantiate correctly.");
+        } finally {
+            frame.dispose();
+        }
     }
 }

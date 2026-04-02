@@ -11,7 +11,12 @@ public class OpenPresentationCommandTest {
     public void testOpenCommand() {
         if (GraphicsEnvironment.isHeadless()) return;
         Presentation p = new Presentation();
-        OpenPresentationCommand cmd = new OpenPresentationCommand(p, new Frame());
-        assertNotNull(cmd);
+        Frame frame = new Frame();
+        try {
+            OpenPresentationCommand cmd = new OpenPresentationCommand(p, frame);
+            assertNotNull(cmd);
+        } finally {
+            frame.dispose();
+        }
     }
 }

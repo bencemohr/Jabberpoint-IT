@@ -1,15 +1,15 @@
 package com.jabberpoint.ui;
 
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import java.awt.GraphicsEnvironment;
 
 public class UICoverageTest {
     @Test
     public void testAboutBoxInstantiation() {
-        try {
-            AboutBox.show(null);
-        } catch (Exception e) {
-            assertNotNull(e);
-        }
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless(),
+                "Skipping AboutBox test in headless environment");
+        AboutBox.show(null);
     }
 }

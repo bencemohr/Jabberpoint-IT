@@ -12,7 +12,12 @@ public class SavePresentationCommandTest {
     public void testSaveCommand() {
         if (GraphicsEnvironment.isHeadless()) return;
         Presentation p = new Presentation();
-        SavePresentationCommand cmd = new SavePresentationCommand(p, new Frame());
-        assertNotNull(cmd);
+        Frame frame = new Frame();
+        try {
+            SavePresentationCommand cmd = new SavePresentationCommand(p, frame);
+            assertNotNull(cmd);
+        } finally {
+            frame.dispose();
+        }
     }
 }

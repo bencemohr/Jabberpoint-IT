@@ -17,10 +17,14 @@ class SlideViewerComponentTest {
         if (GraphicsEnvironment.isHeadless()) return;
         Presentation presentation = new Presentation();
         JFrame frame = new JFrame();
-        SlideViewerComponent component = new SlideViewerComponent(presentation, frame);
-        
-        Dimension preferredSize = component.getPreferredSize();
-        assertEquals(Slide.WIDTH, preferredSize.width);
-        assertEquals(Slide.HEIGHT, preferredSize.height);
+        try {
+            SlideViewerComponent component = new SlideViewerComponent(presentation, frame);
+
+            Dimension preferredSize = component.getPreferredSize();
+            assertEquals(Slide.WIDTH, preferredSize.width);
+            assertEquals(Slide.HEIGHT, preferredSize.height);
+        } finally {
+            frame.dispose();
+        }
     }
 }
